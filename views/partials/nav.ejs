@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg border-bottom border-body">
     <div class="container">
-        <a class="navbar-brand" href="/home">WEGAME</a>
+        <a class="navbar-brand" href="/">WEGAME</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
             aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -8,9 +8,26 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/home">Games</a>
+                    <a class="nav-link active" aria-current="page" href="/">Games</a>
                 </li>
             </ul>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 profile-menu"> 
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="profile-pic">
+                        <img src="/images/kitty.jpg" alt="Profile Picture">
+                     </div>
+                 <!-- You can also use icon as follows: -->
+                   <!--  <i class="fas fa-user"></i> -->
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#">Account</a></li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/logout">Log Out</a></li>
+                  </ul>
+                </li>
+             </ul>
         </div>
     </div>
 </nav>

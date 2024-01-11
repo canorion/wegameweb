@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEGAME!</title>
+</head>
+
+<body class="d-flex align-items-center py-4">
+    <div class="login-container">
+        <form action="/login" method="POST" class="mt-1 align-items-center" novalidate>
+            <input name="email" type="email" class="form-control pb-2 mb-3" placeholder="Email" required autocomplete="false">
+            <input name="password" type="password" class="form-control pb-2 mb-4" placeholder="Password" required>
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <button class="btn sign-in">
+                            Sign In
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <div class="text-center mt-2 footer">
+            <span>&copy;</span> 2024 WEGAME
+        </div>
+    </div>
+
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

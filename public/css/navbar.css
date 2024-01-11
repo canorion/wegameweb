@@ -1,0 +1,82 @@
+.navbar {
+    background-color: #150B24;
+  }
+  
+  .border-bottom {
+    border-bottom: solid #A624D0 1px !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #A624D0;
+    outline: 0 none;
+  }
+  
+  .navbar-brand {
+    color: #A624D0;
+  }
+  
+  .navbar-brand:hover {
+    color: #A624D0;
+    opacity: .9;
+  }
+  
+  .navbar-nav .nav-link.active {
+    color: #A624D0;
+  }
+  
+  .navbar-nav .nav-link.active:hover {
+    color: #A624D0;
+    opacity: .9;
+  }
+  
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(166, 36, 208, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+  
+  .custom-toggler.navbar-toggler {
+    border-color: #A624D0;
+  }
+  
+  .navbar-toggler:focus,
+  .navbar-toggler:active,
+  .navbar-toggler-icon:focus {
+      outline: none;
+      box-shadow: none;
+  }
+  
+  /* Profile Picture */
+  .profile-pic{
+    display: inline-block;
+    vertical-align: middle;
+     width: 50px;
+     height: 50px;
+     overflow: hidden;
+    border-radius: 50%;
+  }
+  
+  .profile-pic img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .profile-menu .dropdown-menu {
+   right: 0;
+   left: unset;
+  }
+  
+  .profile-menu .fa-fw {
+   margin-right: 10px;
+  }
+  
+  .toggle-change::after {
+   border-top: 0;
+   border-bottom: 0.3em solid;
+  }
+  
+  .nav-link, .navbar-nav .nav-link.active, .navbar-nav .nav-link.show, .nav-link:focus, .nav-link:hover {
+    color: white;
+  }
+  
+  .nav-link:hover {
+    color: white;
+    opacity: .9;
+  }
+  
