@@ -1,6 +1,7 @@
 <div class="dropdown">
     <button class="btn btn-primary" type="button" id="dropdown<%=ddName%>" data-bs-toggle="dropdown"
-        aria-expanded="false">
+        aria-expanded="false" style="width: 150px;">
+        <div id="<%=ddName%>SelectedImage"></div>
         <div id="<%=ddName%>ButtonText">
             Choose a Team
         </div>
@@ -26,9 +27,9 @@
             var id = '<%=ddName%>';
             $('#' + id).val(team);
             // Get the image source of the clicked item
-            //var selectedImageSrc = $(this).find('img').attr('src');
+            var selectedImageSrc = $(this).find('img').attr('src');
             // Set the selected image in the div
-            //$('#selected-image').html('<img src="' + selectedImageSrc + '" alt="' + team + '" width="51">');
+            $('#<%=ddName%>SelectedImage').html('<img src="' + selectedImageSrc + '" alt="' + team + '" width="51">');
             $("#<%=ddName%>ButtonText").html(team);
         });
 
