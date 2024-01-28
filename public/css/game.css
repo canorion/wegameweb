@@ -85,3 +85,13 @@ body {
   width: 20px;
   height:20px;
 }
+
+.btn-primary.custom-btn {
+	background-color: #611b55;
+	border-color: #611b55;
+}
+
+.btn-primary.custom-btn:active {
+	background-color: #611b55;
+	border-color: #611b55;
+}

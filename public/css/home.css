@@ -179,6 +179,7 @@ a {
   min-width: 100px !important;
   text-align: center;
   padding: 5px !important;
+  margin-bottom: 20px !important;
 }
 
 .product_list .card-header .btn-link:after {

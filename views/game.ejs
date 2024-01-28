@@ -20,7 +20,12 @@
     <%- include('partials/nav') %>
         <div class="container mt-5">
             <div class="row accordion" id="accordion">
-                <%- include('partials/game', game, teamList) %>
+                <% if (game._id === '65a7e5a317869e53de589f3c') { %>
+                    <%- include('partials/game', game, teamList) %> 
+                <% } %>
+                <% if (game._id === '65b69c4843dbca076cbd2c0f') { %>
+                    <%- include('partials/game2', game, teamList) %> 
+                <% } %>
             </div>
         </div>
 

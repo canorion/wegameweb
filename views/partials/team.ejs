@@ -1,5 +1,5 @@
 <div class="dropdown">
-    <button class="btn btn-primary" type="button" id="dropdown<%=ddName%>" data-bs-toggle="dropdown"
+    <button class="btn btn-primary custom-btn" type="button" id="dropdown<%=ddName%>" data-bs-toggle="dropdown"
         aria-expanded="false" style="width: 150px;">
         <div id="<%=ddName%>SelectedImage"></div>
         <div id="<%=ddName%>ButtonText">
@@ -22,14 +22,15 @@
     $(document).ready(function () {
         
         // When a dropdown item is clicked
-        $('.<%=ddName%>DDItem').click(function () {
+        $('.<%=ddName%>DDItem').click(function (event) {
+            event.preventDefault();
             var team = $(this).data('value');
             var id = '<%=ddName%>';
             $('#' + id).val(team);
             // Get the image source of the clicked item
             var selectedImageSrc = $(this).find('img').attr('src');
             // Set the selected image in the div
-            $('#<%=ddName%>SelectedImage').html('<img src="' + selectedImageSrc + '" alt="' + team + '" width="51">');
+            $('#<%=ddName%>SelectedImage').html('<img src="' + selectedImageSrc + '" alt="' + team + '" width="100">');
             $("#<%=ddName%>ButtonText").html(team);
         });
 
@@ -43,7 +44,7 @@
             {
                 $("#btnPlay").removeAttr('disabled');
                 
-                $("#hrefPlay").attr("href","/games/game1/Hackathon Orion Sports Game.html?homeTeam" + homeTeam + "&awayTeam" + awayTeam);
+                $("#hrefPlay").attr("href","/games/game1/Hackathon Orion Sports Game.html?homeTeam=" + homeTeam + "&awayTeam=" + awayTeam);
             }
             else
             {
