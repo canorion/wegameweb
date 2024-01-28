@@ -1,0 +1,61 @@
+<div class="dropdown">
+    <button class="btn btn-primary" type="button" id="dropdown<%=ddName%>" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        <div id="<%=ddName%>ButtonText">
+            Choose a Team
+        </div>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdown<%=ddName%>" id="ul<%=ddName%>">
+        <% teams.forEach(team=> { %>
+            <li>
+                <a class="dropdown-item <%=ddName%>DDItem" href="#" data-value="<%=team.name%>">
+                    <img src="/images/teams/<%=team.imageUrl%>" alt="<%=team.name%>" class="img-dropdown">
+                    <%=team.name%>
+                </a>
+            </li>
+        <% }) %>
+    </ul>
+</div>
+<script>
+    
+    $(document).ready(function () {
+        
+        // When a dropdown item is clicked
+        $('.<%=ddName%>DDItem').click(function () {
+            var team = $(this).data('value');
+            var id = '<%=ddName%>';
+            $('#' + id).val(team);
+            // Get the image source of the clicked item
+            //var selectedImageSrc = $(this).find('img').attr('src');
+            // Set the selected image in the div
+            //$('#selected-image').html('<img src="' + selectedImageSrc + '" alt="' + team + '" width="51">');
+            $("#<%=ddName%>ButtonText").html(team);
+        });
+
+        $('#ul<%=ddName%> li a').click(function () {
+            var selectedValue = $(this).data('value');
+            
+            var homeTeam = $("#<%=ddName%>ButtonText").html();
+            var awayTeam = $("#<%=relatedDD%>ButtonText").html();
+            
+            if(homeTeam.indexOf('Choose') == -1 && awayTeam.indexOf('Choose') == -1)
+            {
+                $("#btnPlay").removeAttr('disabled');
+                
+                $("#hrefPlay").attr("href","/games/game1/Hackathon Orion Sports Game.html?homeTeam" + homeTeam + "&awayTeam" + awayTeam);
+            }
+            else
+            {
+                $("#btnPlay").attr('disabled','disabled');
+            }
+            
+            $('#ul<%=relatedDD%> li a').each(function () {
+                if ($(this).data('value') == selectedValue) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                }
+            });
+        });
+    });
+</script>

@@ -18,6 +18,11 @@ const GameSchema = new mongoose.Schema(
             lowercase: true,
             trim: true,
         },
+        category: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "categories",
+            required: true
+        },
         isActive: {
             type: Boolean,
             default: true,

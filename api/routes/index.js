@@ -1,6 +1,8 @@
 import express from "express"; // import the express module
 import Auth from './auth.js';
 import Game from './game.js';
+import Category from './category.js';
+import Team from './team.js';
 import { Verify, VerifyRole } from "../middleware/verify.js";
 
 const app = express(); // Create an app object
@@ -37,5 +39,7 @@ app.get("/api", (req, res) => {
 
 app.use('/api/auth', Auth);
 app.use('/api/game', Game);
+app.use('/api/category', Category);
+app.use('/api/team', Team);
 
 export default app;

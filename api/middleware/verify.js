@@ -7,14 +7,20 @@ export async function Verify(req, res, next) {
 
     const authHeader = req.headers['authorization'];
 
-    if (!authHeader) return res.sendStatus(204);
-
+    //if (!authHeader) return res.sendStatus(204);
+    
+    if(!authHeader) return res.status(401)
+    .json({ message: "You are not authorized!" });
+    
     const accessToken = authHeader.split(' ')[1];
 
     const checkIfBlacklisted = await Blacklist.findOne({ token: accessToken }); // Check if that token is blacklisted
 
     // if true, send a no content response.
-    if (checkIfBlacklisted) return res.sendStatus(204);
+    //if (checkIfBlacklisted) return res.sendStatus(204);
+    
+    if (checkIfBlacklisted) return res.status(401)
+    .json({ message: "You are not authorized!" });
 
     if (checkIfBlacklisted)
         return res

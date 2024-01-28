@@ -12,7 +12,7 @@
     color: #A624D0;
   }
   
-  .navbar-brand:hover {
+  .navbar-brand:hover, .navbar-brand:focus {
     color: #A624D0;
     opacity: .9;
   }

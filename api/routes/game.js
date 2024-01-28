@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/", Verify, VerifyRole, List);
 
 router.post(
-    "/",
+    "/", Verify, VerifyRole,
     check("name")
         .not()
         .isEmpty()
@@ -26,6 +26,12 @@ router.post(
         .not()
         .isEmpty()
         .withMessage("ImageUrl is required")
+        .trim()
+        .escape(),
+    check("category")
+        .not()
+        .isEmpty()
+        .withMessage("Category is required")
         .trim()
         .escape(),
     Validate,
@@ -52,6 +58,12 @@ router.put(
         .withMessage("ImageUrl is required")
         .trim()
         .escape(),
+    check("category")
+        .not()
+        .isEmpty()
+        .withMessage("Category is required")
+        .trim()
+        .escape(),        
     Validate,
     Update
 );

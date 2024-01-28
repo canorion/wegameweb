@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Audio Recorder</title>
+  <style>
+    .dbfs-graphic {
+      width: 300px;
+      height: 20px;
+      border: 1px solid #000;
+      background-color: #f0f0f0;
+      position: relative;
+    }
+
+    .dbfs-bar {
+      width: 50%; /* Set width according to dBFS level (change dynamically as needed) */
+      height: 100%;
+      background-color: #00cc00; /* Change color based on level */
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+  <script>
+    function updateDBFSLevel(level) {
+      const dbfsBar = document.querySelector('.dbfs-bar');
+      dbfsBar.style.width = level + '%'; // Set width based on the dBFS level
+    }
+  </script>
+</head>
+<body>
+  <button style="visibility: hidden;" id="startRecordingButton">Start Recording</button>
+  <div class="dbfs-graphic">
+    <div class="dbfs-bar"></div>
+  </div>
+
+  <script>
+    // Function to send audio chunks to the FastAPI endpoint
+    async function sendAudioChunks(audioChunks) {
+      const formData = new FormData();
+      formData.append('audio', new Blob(audioChunks, { type: 'audio/webm' }));
+
+      try {
+        const response = await fetch('https://wegame.voiceover.market/voice-level', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (response.ok) {
+          let amp=(await response.json()).normalized_amplitude;
+          console.log("amplitude",amp);
+          updateDBFSLevel(amp);
+
+        } else {
+          console.error('Error sending audio:', response.status, response.statusText);
+        }
+      } catch (error) {
+        console.error('Error sending audio:', error);
+      }
+    }
+
+    // Start recording and send audio chunks
+    async function startRecording() {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mediaRecorder = new MediaRecorder(stream);
+
+      const audioChunks = [];
+
+      mediaRecorder.addEventListener('dataavailable', (event) => {
+        if (event.data.size > 0) {
+          audioChunks.push(event.data);
+        }
+      });
+
+      mediaRecorder.addEventListener('stop', async () => {
+        await sendAudioChunks(audioChunks);
+      });
+
+      mediaRecorder.start();
+
+      setTimeout(() => {
+        mediaRecorder.stop();
+      }, 5000); // Recording for 5 seconds, adjust as needed
+    }
+    function startPeriodic() {
+      setInterval(startRecording,1000);
+    }
+    
+
+    // Start recording when the button is clicked
+    //document.getElementById('startRecordingButton').addEventListener('click', startPeriodic);
+    window.onload=function(){
+        startPeriodic();
+    }
+  </script>
+</body>
+</html>

@@ -1,20 +1,21 @@
 import Game from '../models/Game.js';
 
 /**
- * @route POST api/games
+ * @route POST api/game
  * @desc Creates a new game
  * @access Private
 */
 export async function Insert(req, res) {
     // get required variables from request body
     // using es6 object destructing
-    const { name, description, imageUrl } = req.body;
+    const { name, description, imageUrl, category } = req.body;
     try {
         // create an instance of a game
         const newGame = new Game({
             name,
             description,
-            imageUrl
+            imageUrl,
+            category
         });
 
         await newGame.save(); // save new game into the database
@@ -27,7 +28,7 @@ export async function Insert(req, res) {
         });
 
     } catch (err) {
-        //console.log(err);
+        console.log(err);
 
         res.status(500).json({
             status: "error",
@@ -161,7 +162,7 @@ export async function Delete(req, res) {
 export async function List(req, res) {
     try {
         
-        const games = await Game.find({});
+        const games = await Game.find().populate('category').exec();
 
         res.status(200).json({
             status: "success",
