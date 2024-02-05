@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaman Çizgisi Oyunu</title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/game.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="login-container">
+                        <form id="playerForm" class="mt-1 align-items-center" novalidate>
+                            <input name="block" type="text" class="form-control pb-2 mb-3" placeholder="Block" required
+                                autocomplete="false">
+                            <input name="seat" type="number" class="form-control pb-2 mb-3" placeholder="Seat" required
+                                autocomplete="false">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col text-center mt-4">
+                                        <button class="btn sign-in">
+                                            Join to Game
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-5" style="display: none;">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div id="messageDiv" class="alert alert-info text-center">Game Started!</div>
+                    <div id="gameBackground">
+                        <div id="timeLineContainer" class="my-3 mx-3">&nbsp;</div>
+                    </div>
+                    <button id="btnJump" class="btn btn-primary btn-lg btn-block mt-5">JUMP</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/jquery/dist/jquery.min.js"></script>
+    <script src="script.js"></script>
+    <script src="conn.js"></script>
+</body>
+
+</html>

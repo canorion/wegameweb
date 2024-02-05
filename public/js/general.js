@@ -10,19 +10,3 @@ document.querySelectorAll(".dropdown-toggle").forEach((item) => {
     });
 });
 
-$(function () {
-    //twitter bootstrap script
-    $(".sign-in").click(function () {
-        $.ajax({
-            type: "POST",
-            url: "PastSurgicalCustomItem",
-            data: $('form.form-horizontal').serialize(),
-            success: function (msg) {
-                alert(msg);
-            },
-            error: function () {
-                alert("failure");
-            }
-        });
-    });
-});

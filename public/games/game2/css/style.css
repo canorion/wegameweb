@@ -1,0 +1,46 @@
+#timeLineContainer {
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    white-space: nowrap;
+    height: 100px;
+    padding-top: 35px;
+}
+
+#gameBackground {
+    width: 220px;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url('../images/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.gameContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 24px;
+    height: 65px;
+    float: left;
+    white-space: nowrap;
+}
+
+.player {
+    position: absolute;
+    top: 15px;
+    left: -25px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: 0px;
+    height: 30px !important;
+    width: 70px;
+    z-index: 1;
+  }
+
+.ground {
+    z-index: 2;
+}

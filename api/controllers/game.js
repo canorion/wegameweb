@@ -162,7 +162,7 @@ export async function Delete(req, res) {
 export async function List(req, res) {
     try {
         
-        const games = await Game.find().populate('category').exec();
+        const games = await Game.find({ isActive: true }).populate('category').exec();
 
         res.status(200).json({
             status: "success",

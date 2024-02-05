@@ -3,6 +3,7 @@ import Auth from './auth.js';
 import Game from './game.js';
 import Category from './category.js';
 import Team from './team.js';
+import HotDogPlayer from './hotdog.js';
 import { Verify, VerifyRole } from "../middleware/verify.js";
 
 const app = express(); // Create an app object
@@ -41,5 +42,6 @@ app.use('/api/auth', Auth);
 app.use('/api/game', Game);
 app.use('/api/category', Category);
 app.use('/api/team', Team);
+app.use('/api/hotdog', HotDogPlayer);
 
 export default app;

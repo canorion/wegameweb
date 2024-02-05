@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import { API_PORT } from "../api/config/index.js";
 import { decode } from 'html-entities';
+import QRCode from 'qrcode';
 
 export async function GetGameList(req, res) {
     try {
@@ -55,9 +56,13 @@ export async function GetGameById(req, res) {
         
         //console.log(teams);
         
+        const qrurl = 'https://9451-78-183-108-232.ngrok-free.app/games/game2'; // Bu URL QR kod içeriği olacak
+        const qrImage = await QRCode.toDataURL(qrurl);
+        
         res.render("game", {
             game: game[0],
-            teamList:teams
+            teamList:teams,
+            qrImage: qrImage
           });
         
     } catch (error) {

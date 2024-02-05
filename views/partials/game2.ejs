@@ -9,12 +9,14 @@
         </div>
         <div class="mt-3 text-center">
             <div class="text-white mt-1">
-                <p class="gameDescription">
-                    <%= description %>
-                </p>
-            
+                <div class="gameDescription">
+                    <p class="mx-3 my-3 gameDescriptionContent">
+                        <%= description %>
+                    </p>
+                </div>
+                <div class="my-5"><img src="<%= qrImage %>" alt="QR Code"></div>
                 <button id="btnPlay" class="btn play mt-3 playButton">
-                    <a id="hrefPlay" href="/games/game1/Hackathon Orion Sports Game.html" target="_blank" class="btn" style="color: white;">Play</a>
+                    <a id="hrefPlay" href="/games/game2/" target="_blank" class="btn" style="color: white;">Play</a>
                 </button>
             </div>
         </div>
