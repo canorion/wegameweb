@@ -1,9 +1,9 @@
 var apiUrl;
 
 if (window.location.hostname === 'localhost') {
-  apiUrl = 'http://localhost:3000';
+  apiUrl = 'http://localhost:3001';
 } else {
-  apiUrl = 'https://stadiumgames.azurewebsites.net:8081';
+  apiUrl = 'https://stadiumgames.azurewebsites.net';
 }
 
 var playerId = '';

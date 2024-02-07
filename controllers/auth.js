@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { API_PORT } from "../api/config/index.js";
+import { FE_PORT } from "../api/config/index.js";
 
 export async function LoginUser(req, res) {
     try {
@@ -7,7 +7,7 @@ export async function LoginUser(req, res) {
         const { email, password } = req.body;
         
         let payload = { email: email, pass: password };
-        let url = 'http://localhost:' + API_PORT + '/api/auth/login';
+        let url = 'http://localhost:' + FE_PORT + '/api/auth/login';
 
         let response = await Axios.post(url, payload);
 
@@ -30,7 +30,7 @@ export async function LogoutUser(req, res) {
 
         const token = req.cookies.access_token;
 
-        let url = 'http://localhost:' + API_PORT + '/api/auth/logout';
+        let url = 'http://localhost:' + FE_PORT + '/api/auth/logout';
 
         Axios.defaults.headers['Authorization'] = `Bearer ${token}`;
         

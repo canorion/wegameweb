@@ -60,13 +60,6 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E06853BEF4764064963DA88E9582EA92 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_188A24A8B37A47CEB5E8F12E35CCF956 }}
       
-      - name: 'Configure App Settings'
-        run: |
-            az webapp config appsettings set --name stadiumgames --resource-group stadiumgamesrg --settings API_PORT=$API_PORT FE_PORT=$FE_PORT
-        env:
-          API_PORT: ${{ env.API_PORT }}
-          FE_PORT: ${{ env.FE_PORT }}
-   
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2

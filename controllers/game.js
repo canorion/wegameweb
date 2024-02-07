@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { API_PORT } from "../api/config/index.js";
+import { FE_PORT } from "../api/config/index.js";
 import { decode } from 'html-entities';
 import QRCode from 'qrcode';
 
@@ -12,7 +12,7 @@ export async function GetGameList(req, res) {
 
         Axios.defaults.headers['Authorization'] = `Bearer ${token}`;
         
-        let url = 'http://localhost:' + API_PORT + '/api/game';
+        let url = 'http://localhost:' + FE_PORT + '/api/game';
 
         const response = await Axios.get(url);
         
@@ -35,9 +35,9 @@ export async function GetGameById(req, res) {
 
         Axios.defaults.headers['Authorization'] = `Bearer ${token}`;
         
-        let url = 'http://localhost:' + API_PORT + '/api/game';
+        let url = 'http://localhost:' + FE_PORT + '/api/game';
         
-        let url2 = 'http://localhost:' + API_PORT + '/api/team';
+        let url2 = 'http://localhost:' + FE_PORT + '/api/team';
         
         const response = await Axios.get(url);
         
