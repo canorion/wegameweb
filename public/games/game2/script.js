@@ -1,12 +1,12 @@
 let lastTime = 0;
 const gameTimeInSeconds = 45;
-const jumpArray = [5, 10, 15, 20, 25, 28, 31, 34, 37, 40, 43];
+let jumpArray = [];
 let gameIsOn = true;
 let timeLine = 0;
 let playerJumped = false;
 let timeLineContent = '<div class="gameContainer">{{runner}}<i class="fa fa-minus ground {{textClass}}"></i></div>';
 
-const btnJump = $('#btnJump');
+const btnJump = $('#jumpBtn');
 const messageDiv = document.getElementById('messageDiv');
 const timeLineContainer = document.getElementById('timeLineContainer');
 
@@ -18,11 +18,15 @@ const showMessage = (message, type) => {
 
 btnJump.on('click', function () {
   if (gameIsOn) {
+    
+    const jumpBtn = document.getElementById('jumpBtn');
+    jumpBtn.style.backgroundImage = "url('images/jumpBtnPressed.png')";
+    
     // showMessage("Jumped!", "success");
     
-    // setTimeout(() => {
-    //   showMessage("The game continues!", "info");
-    // }, 1000);
+     setTimeout(() => {
+      jumpBtn.style.backgroundImage = "url('images/jumpBtn.png')";
+    }, 1000);
     
     playerJumped = true;
     btnJump.prop('disabled', true);
@@ -156,4 +160,22 @@ function preloadImage(url) {
   });
 }
 
-requestAnimationFrame(gameLoop);
+//requestAnimationFrame(gameLoop);
+
+let selectedTeam = '';
+
+function selectTeam(team) {
+    const homeButton = document.getElementById('homeButton');
+    const awayButton = document.getElementById('awayButton');
+
+    homeButton.style.backgroundImage = "url('images/homeBtn.png')";
+    awayButton.style.backgroundImage = "url('images/awayBtn.png')";
+
+    if (team === 'home') {
+        homeButton.style.backgroundImage = "url('images/homeBtnPressed.png')";
+        selectedTeam = 'home';
+    } else if (team === 'away') {
+        awayButton.style.backgroundImage = "url('images/awayBtnPressed.png')";
+        selectedTeam = 'away';
+    }
+}

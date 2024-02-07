@@ -1,5 +1,5 @@
 import express from "express";
-import { InsertPlayer, InsertGame, GetGameList } from "../controllers/hotdog.js";
+import { InsertPlayer, InsertGame, GetGameList, StartGame } from "../controllers/hotdog.js";
 import Validate from "../middleware/validate.js";
 import { check } from "express-validator";
 
@@ -16,17 +16,16 @@ router.post(
     check("seat")
         .not()
         .isEmpty()
-        .withMessage("Description is required")
+        .withMessage("Seat is required")
         .trim()
         .escape(),
     Validate,
     InsertPlayer
 );
 
-router.post(
-    "/game",
-    InsertGame
-);
+router.post("/game", InsertGame);
+
+router.post("/startgame", StartGame);
 
 router.get(
     "/game",

@@ -13,6 +13,9 @@ const HotDogGameSchema = new mongoose.Schema(
         isActive: {
             type: Boolean,
             default: true,
+        },
+        timeData: {
+            type: String
         }
     },
     { timestamps: true }

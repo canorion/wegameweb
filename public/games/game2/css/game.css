@@ -96,83 +96,56 @@ body {
 	border-color: #611b55;
 }
 
-/**/
 
-.form-control {
-  font-family: VT323;
-  width: 170px;
-  margin-bottom: 10px;
-  color: #E7F0F6;
-  line-height: normal;
-  background: none;
-  border-style: solid;
-  border-width: 4px 4px 4px 4px;
-  border-color: #AB25D4;
-  margin-left: 25px;
+#timeLineContainer {
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  white-space: nowrap;
+  height: 100px;
+  padding-top: 35px;
 }
 
-.form-control:focus {
-  color: #E7F0F6;
-  background: none;
-  border-color: Transparent;
-  outline: none;
-  margin-left: 25px;
+#gameBackground {
+  width: 220px;
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url('../images/background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-.form-control::placeholder {
-  /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #E7F0F6;
-  opacity: 1;
-  /* Firefox */
+.gameContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  font-size: 24px;
+  height: 65px;
+  float: left;
+  white-space: nowrap;
 }
 
-.form-control:-ms-input-placeholder {
-  /* Internet Explorer 10-11 */
-  color: #E7F0F6;
+.player {
+  position: absolute;
+  top: 15px;
+  left: -25px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: 0px;
+  height: 30px !important;
+  width: 70px;
+  z-index: 1;
 }
 
-.form-control::-ms-input-placeholder {
-  /* Microsoft Edge */
-  color: #E7F0F6;
+.ground {
+  z-index: 2;
 }
 
-.sign-in, .sign-in:focus, .sign-in:active, sign-in:active:focus {
-  outline: none;
-  border-width: 4px 4px 4px 4px !important;
-  border-color: #AB25D4 !important;
-  background-color: #AB25D4 !important;
-  color: #E7F0F6 !important;
-  border-radius: 20px;
-  box-shadow: 0px 4px 0px #611b55 !important;
-}
-
-.sign-in:hover {
-  opacity: .9;
-  border-width: 4px 4px 4px 4px;
-  border-color: #AB25D4;
-  background-color: #AB25D4;
-  color: #E7F0F6;
-  animation: swing 1s ease-in-out infinite;
-  border-radius: 20px;
-  box-shadow: 0px 4px 0px #611b55;
-}
-
-@keyframes swing {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-3px);
-  }
-}
-
-.login-container {
-  width: 313px;
-  height: 309px;
-  margin: auto;
-  padding: 50px;
-  border-style: solid;
-  border-width: 4px 4px 4px 4px;
-  border-color: #AB25D4;
-  background-color: #150B24;
+#messageDiv {
+  width: 220px; 
+  margin: auto; 
+  text-align: center;
 }
