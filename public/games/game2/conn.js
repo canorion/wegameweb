@@ -1,3 +1,11 @@
+var apiUrl;
+
+if (window.location.hostname === 'localhost') {
+  apiUrl = 'http://localhost:3000';
+} else {
+  apiUrl = 'https://stadiumgames.azurewebsites.net:8081';
+}
+
 var playerId = '';
 var gameId = '';
 
@@ -28,7 +36,7 @@ $(function () {
         
         $.ajax({
             type: "GET",
-            url: "http://localhost:3000/api/hotdog/game",
+            url: apiUrl + "/api/hotdog/game",
             dataType: "json",
             encode: true
         })
@@ -59,7 +67,7 @@ function InsertPlayer(gameId) {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:3000/api/hotdog/player",
+        url: apiUrl + "/api/hotdog/player",
         data: formData,
         dataType: "json",
         encode: true
@@ -80,7 +88,7 @@ function InsertHotDogGame()
 {   
     $.ajax({
         type: "POST",
-        url: "http://localhost:3000/api/hotdog/game",
+        url: apiUrl + "/api/hotdog/game",
         dataType: "json",
         encode: true
     })
@@ -111,7 +119,7 @@ function startGame() {
     
     $.ajax({
         type: "POST",
-        url: "http://localhost:3000/api/hotdog/startgame",
+        url: apiUrl + "/api/hotdog/startgame",
         data: formData,
         dataType: "json",
         encode: true
