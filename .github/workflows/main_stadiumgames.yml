@@ -68,4 +68,13 @@ jobs:
           slot-name: 'Production'
           resource-group-name: 'stadiumgamesrg'
           package: .
+      - name: Set environment variables in Azure
+        run: |
+          az webapp config appsettings set --name your-app-name --resource-group your-resource-group-name --settings API_PORT=$API_PORT FE_PORT=$FE_PORT
+        env:
+          AZURE_WEBAPP_NAME: stadiumgames # Azure App Service adınız
+          API_PORT: ${{ env.API_PORT }}
+          FE_PORT: ${{ env.FE_PORT }}
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+
           
