@@ -56,7 +56,7 @@ export async function GetGameById(req, res) {
         
         //console.log(teams);
         
-        const qrurl = 'https://9451-78-183-108-232.ngrok-free.app/games/game2'; // Bu URL QR kod içeriği olacak
+        const qrurl = 'https://stadiumgames.azurewebsites.net/games/game2';
         const qrImage = await QRCode.toDataURL(qrurl);
         
         res.render("game", {
