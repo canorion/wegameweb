@@ -15,11 +15,14 @@ const HotDogPlayerSchema = new mongoose.Schema(
           type: String,  
           required: "Side is required"
         },
+        timeData: {
+            type: String
+        },
         hotdoggame: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "hotdoggames",
             required: true
-         }
+        }
     },
     { timestamps: true }
 );

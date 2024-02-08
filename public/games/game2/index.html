@@ -22,7 +22,6 @@
                             required autocomplete="false">
                         <input name="seat" id="seat" type="number" class="form-control pb-2 mb-3" placeholder="Seat"
                             required autocomplete="false">
-
                         <div class="row">
                             <div class="col-12 my-3">
                                 <button id="homeButton" type="button" class="btn-image"
@@ -31,8 +30,6 @@
                                     onclick="selectTeam('away')"></button>
                             </div>
                         </div>
-
-
                         <div class="row">
                             <div class="col text-center mt-3">
                                 <button class="btn sign-in">
@@ -41,14 +38,14 @@
                             </div>
                         </div>
                     </form>
-                    <div id="gameContainer" class="align-items-center" style="display: none; height: 400px; text-align: center;">
-                        <div id="messageDiv" class="alert alert-info text-center">The game will start!</div>
-                        <div id="gameBackground" class="mb-3">
-                            <div id="timeLineContainer" class="my-3 mx-3">&nbsp;</div>
-                        </div>
-                        <button id="jumpBtn" type="button" class="btn-image mt-5 mb-3"></button>
-                    </div>
                 </div>
+                
+                <div id="messageDiv" class="alert alert-info text-center" style="display: none;"></div>
+                
+                <div class="btnContainer align-items-center text-center" style="display: none;">
+                    <button id="jumpBtn" type="button" class="btn-image mt-5 mb-3"></button>
+                </div>
+                
             </div>
         </div>
     </div>

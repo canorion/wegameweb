@@ -8,6 +8,9 @@ if (window.location.hostname === 'localhost') {
 
 var playerId = '';
 var gameId = '';
+var isGameStarted = false;
+var gameStartTime = new Date();
+var timeArray = [];
 
 $(function () {
     $("#playerForm").on("submit", function (event) {
@@ -41,6 +44,8 @@ $(function () {
             encode: true
         })
         .done(function (response) {
+            
+            gameStartTime = new Date();
             
             if(response.data.length === 0) {
                 console.log("Game inserted successfully");
@@ -76,8 +81,8 @@ function InsertPlayer(gameId) {
     .done(function (response) {
         console.log("Created Player Id: " + response.data.id);
         playerId = response.data.id;
-        $("#playerForm").fadeOut(0, function () { 
-            $("#gameContainer").fadeIn(0);  
+        $(".login-container").fadeOut(0, function () { 
+            $(".btnContainer").fadeIn(0);  
         });
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
@@ -103,22 +108,8 @@ function InsertHotDogGame()
     });
 }
 
-function playerLost() {
-    $.ajax({
-        type: "GET",
-        url: apiUrl + "/api/hotdog/playerlost/" + playerId,
-        dataType: "json",
-        encode: true
-    })
-    .done(function (response) {
-        console.log(response.message);
-    })
-    .fail(function (jqXHR, textStatus, errorThrown) {
-        console.error("Err: " + textStatus, errorThrown);
-    });
-}
-
 function checkWinner() {
+    
     $.ajax({
         type: "GET",
         url: apiUrl + "/api/hotdog/checkwinner/" + gameId,
@@ -127,7 +118,10 @@ function checkWinner() {
     })
     .done(function (response) {
         console.log(response);
-        if(response.data != null && response.data._id === playerId) {
+        
+        $(".btnContainer").fadeOut(0); 
+        
+        if(response.playerId === playerId) {
             showMessage("You Win!", "success");
         }
         else
@@ -140,6 +134,28 @@ function checkWinner() {
     });
 }
 
+function insertPlayerTimeData() {
+    var formData = {
+        playerId: playerId,
+        timeData: timeArray.join(',')
+    };
+    
+    $.ajax({
+        type: "POST",
+        url: apiUrl + "/api/hotdog/playertimedata",
+        data: formData,
+        dataType: "json",
+        encode: true
+    })
+  .done(function (response) {
+    
+    setTimeout(() => {
+        checkWinner();  
+    }, 5000);
+    
+  });
+}
+
 var isGameStartedCheckURL = apiUrl + "/api/hotdog/game";
 
 var intervalID = setInterval(function() {
@@ -147,29 +163,37 @@ var intervalID = setInterval(function() {
         url: isGameStartedCheckURL + "/" + gameId,
         type: 'GET',
         success: function(response) {
-            if(response.data.length > 0 && response.data[0].isStarted)
-            {
-                console.log(response);
-                
-                clearInterval(intervalID);
             
-                var timeData = response.data[0].timeData.split(',').map(item => parseInt(item, 10));
-               
-                jumpArray.push(...timeData);
-                
-                jumpArray.sort(function(a, b) {
-                    return a - b;
-                });
-                
-                setTimeout(() => {
-                    requestAnimationFrame(gameLoop);
-                  }, 1000);
-                
-                showMessage("Game Started!", "success");
+            if(isGameStarted)
+            {
+                if(response.data.length > 0 && response.data[0].isFinished)
+                {
+                    console.log("Finished");
+                    insertPlayerTimeData();
+                    clearInterval(intervalID);
+                }
+                else 
+                {
+                    console.log(timeArray.join(','));
+                }
+            }
+            else 
+            {
+                if(response.data.length > 0 && response.data[0].isStarted)
+                {
+                    console.log(response);
+                    
+                    isGameStarted = true;
+                    
+                    setTimeout(() => {
+                        gameStartTime = new Date();
+                    }, 1000);
+                }
             }
         },
         error: function(xhr, status, error) {
-            console.error('Hata:', status, error);
+            clearInterval(intervalID);
+            console.error('Error:', status, error);
         }
     });
 }, 1000);

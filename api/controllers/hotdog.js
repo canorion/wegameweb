@@ -116,7 +116,7 @@ export async function StartGame(req, res) {
 
         const { gameId, timeData } = req.body;
 
-        const hotDogGame = await HotDogGame.findOne({ _id: gameId })
+        const hotDogGame = await HotDogGame.findOne({ _id: gameId });
 
         if (!hotDogGame) {
             return res.status(400).json({
@@ -125,8 +125,7 @@ export async function StartGame(req, res) {
                 message: "Record not found!",
             });
         }
-        else 
-        {
+        else {
             await HotDogGame.updateOne(
                 { _id: gameId },
                 {
@@ -185,8 +184,6 @@ export async function GetGameById(req, res) {
             message: "Internal Server Error",
         });
     }
-
-    res.end();
 }
 
 /**
@@ -225,85 +222,132 @@ export async function GetGameStatus(req, res) {
 }
 
 /**
- * @route GET api/hotdog/playerlost/id
- * @desc Player lost by id
- * @access Public
-*/
-export async function PlayerLost(req, res) {
-    HotDogPlayer.findByIdAndDelete(req.params.id).then((deletedPlayer) => {
-        if (deletedPlayer) {
-            res.status(200).json({
-                status: "success",
-                message:
-                    "Player deleted successfully"
-            });
-        }
-        else 
-        {
-            res.end();
-        }
-    }).catch((err) => {
-        console.log(err);
-        
-        res.status(500).json({
-            status: "error",
-            code: 500,
-            data: [],
-            message: "Internal Server Error",
-        });
-    });
-}
-
-/**
  * @route GET api/hotdog/checkwinner/id
  * @desc Get winner of the game
  * @access Public
 */
+
+function calculateTotalDifference(array1, array2) {
+    let minLength = Math.min(array1.length, array2.length);
+    let difference = 0;
+    for (let i = 0; i < minLength; i++) {
+      difference += Math.abs(array1[i] - array2[i]);
+    }
+    return difference;
+  }
+
 export async function CheckWinner(req, res) {
 
-    HotDogGame.findByIdAndDelete(req.params.id).then((deletedGame) => {
-        if (deletedGame) {
-            const gameIdAsObjectId = new mongoose.Types.ObjectId(req.params.id);
-            
-            HotDogPlayer.aggregate([
-                { $match: { hotdoggame: gameIdAsObjectId } },
-                { $sample: { size: 1 } }
-            ]).then(result => {
-                if (result.length > 0) {
-                    res.status(200).json({
-                        status: "success",
-                        winner: result[0]._id,
-                        message: "Winner returned successfully",
-                    });
-                } else {
-                    res.status(404).json({
-                        status: "error",
-                        message: "No players found",
-                    });
-                }
-            }).catch(err => {
-                console.log(err);
-                res.status(500).json({
-                    status: "error",
-                    code: 500,
-                    data: [],
-                    message: "Internal Server Error",
+    const hotDogGame = await HotDogGame.findOne({ _id: req.params.id });
+
+    var gameTimeData = hotDogGame.timeData.split(',');
+
+    gameTimeData = gameTimeData.map(function (item) {
+        return parseFloat(item);
+    });
+
+    let smallestDifference = Infinity;
+    let winner = '';
+    let playerId = '';
+    
+    HotDogPlayer.find({
+        hotdoggame: req.params.id
+    }).then((documents) => {
+        documents.forEach((record) => {
+            if(record.timeData.length > 1)
+            {
+                var recordTimeData = record.timeData.split(',');
+
+                recordTimeData = recordTimeData.map(function (item) {
+                    return parseFloat(item);
                 });
-            });
-        } else {
-            res.status(404).json({
-                status: "error",
-                message: "Game not found",
-            });
-        }
-    }).catch(err => {
+                
+                const recordDifference = calculateTotalDifference(gameTimeData, recordTimeData);
+                
+                console.log("gameTimeData: " + gameTimeData.join(','));
+                console.log("recordTimeData: " + recordTimeData.join(','));
+                console.log("recordDifference: " + recordDifference);
+                
+                if (recordDifference < smallestDifference) {
+                    console.error(record);
+                
+                    smallestDifference = recordDifference;
+                    
+                    playerId = record._id;
+                    winner = record.side + ' side, Block: ' + record.block + ', Seat: ' + record.seat;
+                }
+            }
+        });
+        
+        HotDogGame.findByIdAndDelete(req.params.id).then(function (record) { });
+                
+        res.status(200).json({
+            status: "success",
+            playerId: playerId,
+            winner: winner.toUpperCase(),
+            message: "Winner returned successfully",
+        });
+    }).catch((err) => {
+        console.error(err);
+    });
+}
+
+/**
+ * @route GET api/hotdog/endGame/id
+ * @desc Get winner of the game
+ * @access Public
+*/
+export async function EndGame(req, res) {
+
+    await HotDogGame.updateOne(
+        { _id: req.params.id },
+        {
+            $set: {
+                isFinished: true
+            },
+        },
+        { upsert: false }
+    );
+    
+    res.end();
+}
+
+
+/**
+ * @route POST api/hotdog/playertimedata
+ * @desc Insert player time data
+ * @access Public
+*/
+export async function PlayerTimeData(req, res) {
+    try {
+
+        const { playerId, timeData } = req.body;
+
+        await HotDogPlayer.updateOne(
+            { _id: playerId },
+            {
+                $set: {
+                    timeData: timeData
+                },
+            },
+            { upsert: false }
+        );
+
+        res.status(200).json({
+            status: "success",
+            data: [],
+            message:
+                "Playet time data inserted successfully",
+        });
+
+    } catch (err) {
         console.log(err);
+
         res.status(500).json({
             status: "error",
             code: 500,
             data: [],
             message: "Internal Server Error",
         });
-    });
-    
+    }
 }

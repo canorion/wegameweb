@@ -10,6 +10,10 @@ const HotDogGameSchema = new mongoose.Schema(
             type: Boolean,
             default: true,
         },
+        isFinished: {
+            type: Boolean,
+            default: false,
+        },
         timeData: {
             type: String
         }

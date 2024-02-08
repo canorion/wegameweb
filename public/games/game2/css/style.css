@@ -98,8 +98,10 @@
   }
   
   #jumpBtn {
-    height: 79px !important;
+    width: 200px !important;
+    height: 158px !important;
     margin: auto;
+    background-size: cover !important;
     background: transparent;
     background-image: url('../images/jumpBtn.png');
   }
