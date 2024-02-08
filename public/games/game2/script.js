@@ -78,8 +78,9 @@ const finishTheGame = (win) => {
   gameIsOn = false;
   if (!win) {
     showMessage("You Lose!", "danger");
+    playerLost();
   } else {
-    showMessage("You Win!", "success");
+    checkWinner();
   }
   btnJump.prop('disabled', true);
 };
@@ -104,6 +105,7 @@ const gameLoop = (timestamp) => {
         
         setTimeout(() => {
           if (gameIsOn && !playerJumped) {
+            playerLost();
             showMessage("You Lose!", "danger");
             
             var nextObject = $(".player").next();

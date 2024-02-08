@@ -1,5 +1,5 @@
 import express from "express";
-import { InsertPlayer, InsertGame, GetGameList, StartGame, GetGameById, GetGameStatus } from "../controllers/hotdog.js";
+import { InsertPlayer, InsertGame, GetGameList, StartGame, GetGameById, GetGameStatus, PlayerLost, CheckWinner } from "../controllers/hotdog.js";
 import Validate from "../middleware/validate.js";
 import { check } from "express-validator";
 
@@ -38,6 +38,10 @@ router.get("/game", GetGameList);
 router.get("/game/:id", GetGameById);
 
 router.get("/gamestatus/:id", GetGameStatus);
+
+router.get("/playerlost/:id", PlayerLost);
+
+router.get("/checkwinner/:id", CheckWinner);
 
 
 export default router;

@@ -75,7 +75,7 @@ function InsertPlayer(gameId) {
     })
     .done(function (response) {
         console.log("Created Player Id: " + response.data.id);
-        playerId = response.data._id;
+        playerId = response.data.id;
         $("#playerForm").fadeOut(0, function () { 
             $("#gameContainer").fadeIn(0);  
         });
@@ -97,6 +97,43 @@ function InsertHotDogGame()
         console.log("Created Game Id: " + response.data.id);  
         gameId = response.data.id;
         InsertPlayer(response.data.id);
+    })
+    .fail(function (jqXHR, textStatus, errorThrown) {
+        console.error("Err: " + textStatus, errorThrown);
+    });
+}
+
+function playerLost() {
+    $.ajax({
+        type: "GET",
+        url: apiUrl + "/api/hotdog/playerlost/" + playerId,
+        dataType: "json",
+        encode: true
+    })
+    .done(function (response) {
+        console.log(response.message);
+    })
+    .fail(function (jqXHR, textStatus, errorThrown) {
+        console.error("Err: " + textStatus, errorThrown);
+    });
+}
+
+function checkWinner() {
+    $.ajax({
+        type: "GET",
+        url: apiUrl + "/api/hotdog/checkwinner/" + gameId,
+        dataType: "json",
+        encode: true
+    })
+    .done(function (response) {
+        console.log(response);
+        if(response.data != null && response.data._id === playerId) {
+            showMessage("You Win!", "success");
+        }
+        else
+        {
+            showMessage("You Lose!", "danger");
+        }
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
         console.error("Err: " + textStatus, errorThrown);

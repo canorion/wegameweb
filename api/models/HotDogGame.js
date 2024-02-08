@@ -6,10 +6,6 @@ const HotDogGameSchema = new mongoose.Schema(
             type: Boolean,
             default: true,
         },
-        isFinished: {
-            type: Boolean,
-            default: true,
-        },
         isActive: {
             type: Boolean,
             default: true,
