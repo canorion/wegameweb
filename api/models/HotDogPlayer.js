@@ -11,6 +11,10 @@ const HotDogPlayerSchema = new mongoose.Schema(
             type: Number,
             required: "Seat is required"
         },
+        side: {
+          type: String,  
+          required: "Side is required"
+        },
         hotdoggame: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "hotdoggames",

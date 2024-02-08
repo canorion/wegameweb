@@ -41,13 +41,13 @@ $(function () {
             encode: true
         })
         .done(function (response) {
-            var activeGame = response.data.length;
             
-            if(activeGame === 0) {
+            if(response.data.length === 0) {
+                console.log("Game inserted successfully");
                 InsertHotDogGame(); 
             } 
             else
-            {
+            {            
                 gameId = response.data[0]._id
                 InsertPlayer(gameId);
             }
@@ -62,7 +62,8 @@ function InsertPlayer(gameId) {
     var formData = {
         block: $("#block").val(),
         seat: $("#seat").val(),
-        hotdoggame: gameId
+        hotdoggame: gameId, 
+        side: selectedTeam 
     };
 
     $.ajax({
@@ -75,8 +76,8 @@ function InsertPlayer(gameId) {
     .done(function (response) {
         console.log("Created Player Id: " + response.data.id);
         playerId = response.data._id;
-        $("#playerForm").fadeOut(1000, function () { 
-            $("#gameContainer").fadeIn(2000);  
+        $("#playerForm").fadeOut(0, function () { 
+            $("#gameContainer").fadeIn(0);  
         });
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
@@ -102,56 +103,36 @@ function InsertHotDogGame()
     });
 }
 
-function startGame() {
-    
-    let randomArray = createRandomArray(5, 44, 3);
-    
-    jumpArray.push(...randomArray);
-    
-    jumpArray.sort(function(a, b) {
-        return a - b;
-    });
-    
-    var formData = {
-        gameId: gameId,
-        timeData: randomArray.join(",")
-    };
-    
+var isGameStartedCheckURL = apiUrl + "/api/hotdog/game";
+
+var intervalID = setInterval(function() {
     $.ajax({
-        type: "POST",
-        url: apiUrl + "/api/hotdog/startgame",
-        data: formData,
-        dataType: "json",
-        encode: true
-    })
-    .done(function (response) {
-        showMessage("Game Started!", "success");
-        requestAnimationFrame(gameLoop);
-    })
-    .fail(function (jqXHR, textStatus, errorThrown) {
-        console.error("Err: " + textStatus, errorThrown);
+        url: isGameStartedCheckURL + "/" + gameId,
+        type: 'GET',
+        success: function(response) {
+            if(response.data.length > 0 && response.data[0].isStarted)
+            {
+                console.log(response);
+                
+                clearInterval(intervalID);
+            
+                var timeData = response.data[0].timeData.split(',').map(item => parseInt(item, 10));
+               
+                jumpArray.push(...timeData);
+                
+                jumpArray.sort(function(a, b) {
+                    return a - b;
+                });
+                
+                setTimeout(() => {
+                    requestAnimationFrame(gameLoop);
+                  }, 1000);
+                
+                showMessage("Game Started!", "success");
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Hata:', status, error);
+        }
     });
-}
-
-function createRandomArray(min, max, minDifference) {
-    let possibleValues = [];
-    for (let i = min; i <= max; i++) {
-        possibleValues.push(i);
-    }
-
-    let result = [];
-    while (possibleValues.length > 0 && (max - min) / minDifference >= result.length) {
-        // Rastgele bir indeks seç
-        let randomIndex = Math.floor(Math.random() * possibleValues.length);
-        let selectedValue = possibleValues[randomIndex];
-
-        // Seçilen değeri sonuç dizisine ekle
-        result.push(selectedValue);
-
-        // Seçilen değere göre, mümkün olan değerler listesinden uygun olmayanları çıkar
-        possibleValues = possibleValues.filter(val => Math.abs(val - selectedValue) >= minDifference);
-    }
-
-    return result;
-}
-
+}, 1000);
