@@ -22,7 +22,8 @@ App.use(function(req, res, next) {
 App.set("view engine", "ejs");
 App.use(express.static("public"));
 App.use(express.static("node_modules"));
-App.use('/football', express.static('public/games/game1/'));
+//App.use('/football', express.static('public/games/wegame/'));
+//App.use('/hotdoggame', express.static('public/games/hotdoggame/'));
 
 // Set up mongoose's promise to global promise
 mongoose.promise = global.Promise;

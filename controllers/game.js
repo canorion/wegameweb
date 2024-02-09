@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { FE_PORT } from "../api/config/index.js";
 import { decode } from 'html-entities';
-import QRCode from 'qrcode';
+//import QRCode from 'qrcode';
 
 export async function GetGameList(req, res) {
     try {
@@ -57,12 +57,12 @@ export async function GetGameById(req, res) {
         //console.log(teams);
         
         const qrurl = 'https://stadiumgames.azurewebsites.net/games/game2';
-        const qrImage = await QRCode.toDataURL(qrurl);
+        //const qrImage = await QRCode.toDataURL(qrurl);
         
         res.render("game", {
             game: game[0],
             teamList:teams,
-            qrImage: qrImage
+            //qrImage: qrImage
           });
         
     } catch (error) {

@@ -1,6 +1,7 @@
+var isGameStarted = false;
+
 new Image().src = "images/jumpBtnPressed.png";
 new Image().src = "images/jumpBtn.png";
-
 
 const btnJump = $('#jumpBtn');
 const messageDiv = document.getElementById('messageDiv');
@@ -10,6 +11,30 @@ const showMessage = (message, type) => {
   //messageDiv.className = `alert alert-${type}`;
   messageDiv.innerText = "WINNER IS " + message;
 };
+
+var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+function loadSound(url) {
+    $.ajax({
+        url: url,
+        method: 'GET',
+        responseType: 'arraybuffer',
+        success: function(data) {
+            audioContext.decodeAudioData(data, function(buffer) {
+                playSound(buffer);
+            }, function(e) {
+                console.log('Error decoding audio data: ' + e.err);
+            });
+        }
+    });
+}
+
+function playSound(buffer) {
+    var source = audioContext.createBufferSource();
+    source.buffer = buffer;
+    source.connect(audioContext.destination);
+    source.start(0);
+}
 
 btnJump.on('click', function () {
     
@@ -22,18 +47,17 @@ btnJump.on('click', function () {
     btnJump.prop('disabled', false);
   }, 1000);
 
-  var audio = document.getElementById("myAudio");
-  audio.currentTime = 0;
-  audio.play();
+  loadSound('click.mp3');
   
   if ("vibrate" in navigator) {
     navigator.vibrate(200);
   }
   
-  
-  var currentTime = new Date();
-  var timeDifference = (currentTime - gameStartTime) / 1000;
-  timeArray.push(timeDifference);
+  if(isGameStarted) {
+    var currentTime = new Date();
+    var timeDifference = (currentTime - gameStartTime) / 1000;
+    timeArray.push(timeDifference);
+  }
 });
 
 let selectedTeam = '';

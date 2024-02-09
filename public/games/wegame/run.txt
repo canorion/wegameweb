@@ -1,0 +1,6 @@
+Server:
+docker build . -t wevoice
+docker run -it -p 9000:8000 wevoice
+
+Client:
+python server.py

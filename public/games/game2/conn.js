@@ -8,7 +8,6 @@ if (window.location.hostname === 'localhost') {
 
 var playerId = '';
 var gameId = '';
-var isGameStarted = false;
 var gameStartTime = new Date();
 var timeArray = [];
 
@@ -45,8 +44,6 @@ $(function () {
             .done(function (response) {
 
                 console.log(response);
-
-                gameStartTime = new Date();
 
                 if (response.data.length === 0 || response.data[0].isFinished === true) {
                     //console.log("Game inserted successfully");
@@ -186,7 +183,6 @@ function gameLoop() {
                         isGameStarted = true;
 
                         gameStartTime = new Date();
-
                     }
                 }
             },
