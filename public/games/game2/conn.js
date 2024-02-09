@@ -48,7 +48,7 @@ $(function () {
             gameStartTime = new Date();
             
             if(response.data.length === 0) {
-                console.log("Game inserted successfully");
+                //console.log("Game inserted successfully");
                 InsertHotDogGame(); 
             } 
             else
@@ -121,12 +121,16 @@ function checkWinner() {
         
         $(".btnContainer").fadeOut(0); 
         
+        showMessage(response.winner, "success");
+        
         if(response.playerId === playerId) {
-            showMessage("You Win!", "success");
+            //showMessage("You Win!", "success");
+            $("#winImg").fadeIn(1000);  
         }
         else
         {
-            showMessage("You Lose!", "danger");
+            //showMessage("You Lose!", "danger");
+            $("#loseImg").fadeIn(1000);  
         }
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
@@ -172,22 +176,17 @@ var intervalID = setInterval(function() {
                     insertPlayerTimeData();
                     clearInterval(intervalID);
                 }
-                else 
-                {
-                    console.log(timeArray.join(','));
-                }
             }
             else 
             {
                 if(response.data.length > 0 && response.data[0].isStarted)
                 {
-                    console.log(response);
+                    //console.log(response);
                     
                     isGameStarted = true;
                     
-                    setTimeout(() => {
-                        gameStartTime = new Date();
-                    }, 1000);
+                    gameStartTime = new Date();
+                  
                 }
             }
         },

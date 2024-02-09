@@ -1,12 +1,17 @@
 html,
 body {
   min-height: 100vh;
-  background-color: #150B24;
-  background-image: url('/images/backgroundImage2.png');
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-y: 100px;
+  background-color: #150b24;
+}
+
+@font-face {
+  font-family: VT323;
+  src: url(/fonts/VT323-Regular.ttf);
+}
+
+@font-face {
+  font-family: roboto;
+  src: url(/fonts/Roboto-Regular.ttf);
 }
 
 * {
@@ -16,5 +21,8 @@ body {
 #messageDiv {
   width: 220px; 
   margin: auto; 
+  font-weight: 600;
   text-align: center;
+  font-family: VT323;
+  color: #0fd181;
 }

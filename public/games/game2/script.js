@@ -1,25 +1,38 @@
+new Image().src = "images/jumpBtnPressed.png";
+new Image().src = "images/jumpBtn.png";
+
+
 const btnJump = $('#jumpBtn');
 const messageDiv = document.getElementById('messageDiv');
 
 const showMessage = (message, type) => {
   messageDiv.style.display = 'block';
-  messageDiv.className = `alert alert-${type}`;
-  messageDiv.innerText = message;
+  //messageDiv.className = `alert alert-${type}`;
+  messageDiv.innerText = "WINNER IS " + message;
 };
 
 btnJump.on('click', function () {
-    const jumpBtn = document.getElementById('jumpBtn');
-    jumpBtn.style.backgroundImage = "url('images/jumpBtnPressed.png')";
-    btnJump.prop('disabled', true);
     
-    var currentTime = new Date();
-    var timeDifference = (currentTime - gameStartTime) / 1000;
-    timeArray.push(timeDifference);
-    
-    setTimeout(() => {
-      jumpBtn.style.backgroundImage = "url('images/jumpBtn.png')";
-      btnJump.prop('disabled', false);
-    }, 1000);
+  const btnJump = $('#jumpBtn');
+  btnJump.css('backgroundImage', "url('images/jumpBtnPressed.png')");
+  btnJump.prop('disabled', true);
+
+  setTimeout(() => {
+    btnJump.css('backgroundImage', "url('images/jumpBtn.png')");
+    btnJump.prop('disabled', false);
+  }, 1000);
+
+  var audio = document.getElementById("myAudio");
+  audio.play();
+  
+  if ("vibrate" in navigator) {
+    navigator.vibrate(200);
+  }
+  
+  
+  var currentTime = new Date();
+  var timeDifference = (currentTime - gameStartTime) / 1000;
+  timeArray.push(timeDifference);
 });
 
 let selectedTeam = '';

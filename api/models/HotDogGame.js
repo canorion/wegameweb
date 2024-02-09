@@ -14,6 +14,10 @@ const HotDogGameSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        winner: {
+            type: String,
+            default: ''
+        },
         timeData: {
             type: String
         }

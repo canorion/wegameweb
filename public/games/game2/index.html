@@ -13,9 +13,14 @@
 </head>
 
 <body class="d-flex align-items-center py-2">
+    <audio id="myAudio"><source src="click.mp3" type="audio/mpeg"></audio>
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 text-center">
+                <img id="winImg" src="images/win.png" width="300" style="margin: auto; display: none;">
+                <img id="loseImg" src="images/lose.png" width="300" style="margin: auto; display: none;">
+                <div id="messageDiv" class="text-center mt-5" style="display: none;"></div>
+                
                 <div class="login-container">
                     <form id="playerForm" class="align-items-center" novalidate>
                         <input name="block" id="block" type="text" class="form-control pb-2 mb-3" placeholder="Block"
@@ -40,12 +45,9 @@
                     </form>
                 </div>
                 
-                <div id="messageDiv" class="alert alert-info text-center" style="display: none;"></div>
-                
                 <div class="btnContainer align-items-center text-center" style="display: none;">
                     <button id="jumpBtn" type="button" class="btn-image mt-5 mb-3"></button>
                 </div>
-                
             </div>
         </div>
     </div>

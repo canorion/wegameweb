@@ -254,7 +254,7 @@ export async function CheckWinner(req, res) {
         hotdoggame: req.params.id
     }).then((documents) => {
         documents.forEach((record) => {
-            if(record.timeData.length > 1)
+            if ('timeData' in record && record.timeData) 
             {
                 var recordTimeData = record.timeData.split(',');
 
@@ -264,9 +264,9 @@ export async function CheckWinner(req, res) {
                 
                 const recordDifference = calculateTotalDifference(gameTimeData, recordTimeData);
                 
-                console.log("gameTimeData: " + gameTimeData.join(','));
-                console.log("recordTimeData: " + recordTimeData.join(','));
-                console.log("recordDifference: " + recordDifference);
+                // console.log("gameTimeData: " + gameTimeData.join(','));
+                // console.log("recordTimeData: " + recordTimeData.join(','));
+                // console.log("recordDifference: " + recordDifference);
                 
                 if (recordDifference < smallestDifference) {
                     console.error(record);
@@ -279,14 +279,25 @@ export async function CheckWinner(req, res) {
             }
         });
         
-        HotDogGame.findByIdAndDelete(req.params.id).then(function (record) { });
-                
+        //HotDogGame.findByIdAndDelete(req.params.id).then(function (record) { });
+
+        HotDogGame.updateOne(
+            { _id: req.params.id },
+            {
+                $set: {
+                    winner: winner.toUpperCase()
+                },
+            },
+            { upsert: false }
+        );
+        
         res.status(200).json({
             status: "success",
             playerId: playerId,
             winner: winner.toUpperCase(),
             message: "Winner returned successfully",
         });
+        
     }).catch((err) => {
         console.error(err);
     });
