@@ -15,25 +15,30 @@ const showMessage = (message, type) => {
 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
 function loadSound(url) {
-    $.ajax({
-        url: url,
-        method: 'GET',
-        responseType: 'arraybuffer',
-        success: function(data) {
-            audioContext.decodeAudioData(data, function(buffer) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.responseType = 'arraybuffer';
+
+    xhr.onload = function() {
+        if (xhr.status == 200) {
+            audioContext.decodeAudioData(xhr.response, function(buffer) {
                 playSound(buffer);
             }, function(e) {
                 console.log('Error decoding audio data: ' + e.err);
             });
         }
-    });
+    };
+    xhr.onerror = function() {
+        console.log('XHR error');
+    };
+    xhr.send();
 }
 
 function playSound(buffer) {
-    var source = audioContext.createBufferSource();
-    source.buffer = buffer;
-    source.connect(audioContext.destination);
-    source.start(0);
+    var source = audioContext.createBufferSource(); // creates a sound source
+    source.buffer = buffer; // tell the source which sound to play
+    source.connect(audioContext.destination); // connect the source to the context's destination (the speakers)
+    source.start(0); // play the source now
 }
 
 btnJump.on('click', function () {
