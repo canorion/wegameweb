@@ -3,7 +3,7 @@ var apiUrl;
 if (window.location.hostname === 'localhost') {
     apiUrl = 'http://localhost:3001';
 } else {
-    apiUrl = 'https://stadiumgames.azurewebsites.net';
+    apiUrl = 'https://9f07-88-244-88-200.ngrok-free.app';
 }
 
 var playerId = '';
