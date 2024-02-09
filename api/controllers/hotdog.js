@@ -194,11 +194,13 @@ export async function GetGameById(req, res) {
 export async function GetGameStatus(req, res) {
     try {
 
-        const game = await HotDogGame.find({ _id: req.params.id }).exec();
+        const game = await HotDogGame.findOne({ _id: req.params.id }).exec();
         
         const homePlayerCount = await HotDogPlayer.countDocuments({ hotdoggame: req.params.id, side: 'home' });
         const awayPlayerCount = await HotDogPlayer.countDocuments({ hotdoggame: req.params.id, side: 'away' });
 
+        //console.log("Game: " + req.params.id + " Winner", game.winner);
+        
         res.status(200).json({
             status: "success",
             playerCounts: {
