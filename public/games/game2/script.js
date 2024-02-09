@@ -23,6 +23,7 @@ btnJump.on('click', function () {
   }, 1000);
 
   var audio = document.getElementById("myAudio");
+  audio.currentTime = 0;
   audio.play();
   
   if ("vibrate" in navigator) {
