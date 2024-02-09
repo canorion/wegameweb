@@ -85,7 +85,7 @@ export async function InsertGame(req, res) {
 export async function GetGameList(req, res) {
     try {
 
-        const games = await HotDogGame.find({ isActive: true }).exec();
+        const games = await HotDogGame.find({ isActive: true, isFinished: false }).exec();
 
         res.status(200).json({
             status: "success",
@@ -194,6 +194,8 @@ export async function GetGameById(req, res) {
 export async function GetGameStatus(req, res) {
     try {
 
+        const game = await HotDogGame.find({ _id: req.params.id }).exec();
+        
         const homePlayerCount = await HotDogPlayer.countDocuments({ hotdoggame: req.params.id, side: 'home' });
         const awayPlayerCount = await HotDogPlayer.countDocuments({ hotdoggame: req.params.id, side: 'away' });
 
@@ -203,6 +205,7 @@ export async function GetGameStatus(req, res) {
                 home: homePlayerCount,
                 away: awayPlayerCount,
             },
+            winner: game.winner,
             message:
                 "Game status returned successfully",
         });
@@ -250,9 +253,9 @@ export async function CheckWinner(req, res) {
     let winner = '';
     let playerId = '';
     
-    HotDogPlayer.find({
+    await HotDogPlayer.find({
         hotdoggame: req.params.id
-    }).then((documents) => {
+    }).then(async (documents) => {
         documents.forEach((record) => {
             if ('timeData' in record && record.timeData) 
             {
@@ -279,9 +282,7 @@ export async function CheckWinner(req, res) {
             }
         });
         
-        //HotDogGame.findByIdAndDelete(req.params.id).then(function (record) { });
-
-        HotDogGame.updateOne(
+        await HotDogGame.updateOne(
             { _id: req.params.id },
             {
                 $set: {
@@ -291,15 +292,17 @@ export async function CheckWinner(req, res) {
             { upsert: false }
         );
         
-        res.status(200).json({
-            status: "success",
-            playerId: playerId,
-            winner: winner.toUpperCase(),
-            message: "Winner returned successfully",
-        });
-        
+        //HotDogGame.findByIdAndDelete(req.params.id).then(function (record) { });
+       
     }).catch((err) => {
         console.error(err);
+    });
+    
+    res.status(200).json({
+        status: "success",
+        playerId: playerId,
+        winner: winner.toUpperCase(),
+        message: "Winner returned successfully",
     });
 }
 
