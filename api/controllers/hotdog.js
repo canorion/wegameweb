@@ -204,8 +204,8 @@ export async function GetGameStatus(req, res) {
             playerCounts: {
                 home: homePlayerCount,
                 away: awayPlayerCount,
+                winner: game.winner
             },
-            winner: game.winner,
             message:
                 "Game status returned successfully",
         });
