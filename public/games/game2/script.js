@@ -12,7 +12,7 @@ const showMessage = (message, type) => {
   messageDiv.innerText = "WINNER IS " + message;
 };
 
-var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+var audioContext;
 
 function loadSound(url) {
     var xhr = new XMLHttpRequest();
@@ -42,7 +42,15 @@ function playSound(buffer) {
 }
 
 btnJump.on('click', function () {
-    
+  
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  
+  if (audioContext.state === 'suspended') {
+    audioContext.resume();
+  }
+  
   const btnJump = $('#jumpBtn');
   btnJump.css('backgroundImage', "url('images/jumpBtnPressed.png')");
   btnJump.prop('disabled', true);
