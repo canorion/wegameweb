@@ -50,6 +50,18 @@ export async function InsertGame(req, res) {
     // get required variables from request body
     // using es6 object destructing
     try {
+         // update all old games
+         await Game.updateMany(
+            {},
+            {
+                $set: {
+                    isStarted : true,
+                    isFinished : true
+                },
+            },
+            { upsert: false }
+        );
+        
         // create an instance of a hotdoggame
         const newGame = new HotDogGame({
             isStarted: false,
@@ -85,7 +97,10 @@ export async function InsertGame(req, res) {
 export async function GetGameList(req, res) {
     try {
 
-        const games = await HotDogGame.find({ isActive: true, isFinished: false }).exec();
+        const games = await HotDogGame.find({ isActive: true, isFinished: false })
+        .sort({ createdAt: -1 })
+        .limit(1)
+        .exec();
 
         res.status(200).json({
             status: "success",
