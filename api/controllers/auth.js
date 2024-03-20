@@ -89,6 +89,18 @@ export async function Login(req, res) {
                     "Invalid email or password. Please try again with the correct credentials.",
             });
 
+        // update all old games
+        await Game.updateMany(
+            {},
+            {
+                $set: {
+                    isStarted : true,
+                    isFinished : true
+                },
+            },
+            { upsert: false }
+        );
+            
         let options = {
             maxAge: 20 * 60 * 1000, // would expire in 20minutes
             httpOnly: true, // The cookie is only accessible by the web server

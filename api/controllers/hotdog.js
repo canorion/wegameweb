@@ -50,17 +50,6 @@ export async function InsertGame(req, res) {
     // get required variables from request body
     // using es6 object destructing
     try {
-         // update all old games
-         await Game.updateMany(
-            {},
-            {
-                $set: {
-                    isStarted : true,
-                    isFinished : true
-                },
-            },
-            { upsert: false }
-        );
         
         // create an instance of a hotdoggame
         const newGame = new HotDogGame({
