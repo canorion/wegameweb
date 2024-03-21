@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import Blacklist from '../models/Blacklist.js';
+import HotDogGame from '../models/HotDogGame.js';
 
 /**
  * @route POST api/auth/register
@@ -90,7 +91,7 @@ export async function Login(req, res) {
             });
 
         // update all old games
-        await Game.updateMany(
+        await HotDogGame.updateMany(
             {},
             {
                 $set: {
@@ -115,11 +116,12 @@ export async function Login(req, res) {
             message: "You have successfully logged in.",
         });
     } catch (err) {
+        console.log(err);
         res.status(500).json({
             status: "error",
             code: 500,
             data: [],
-            message: "Internal Server Error",
+            message: err,
         });
     }
     res.end();
